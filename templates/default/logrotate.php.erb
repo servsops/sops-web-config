@@ -1,0 +1,12 @@
+/var/log/nx/php*.log {
+        rotate 12
+        weekly
+        missingok
+        notifempty
+        sharedscripts
+	copytruncate
+        postrotate
+                invoke-rc.d php5-fpm reopen-logs > /dev/null
+        endscript
+        su root syslog
+}
