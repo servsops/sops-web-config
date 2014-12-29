@@ -1,5 +1,5 @@
 #
-modules = node["web-config"]["modules"]
+modules = node.web_config[:modules]
 
 modules.split(" ").each do |m|
   package m

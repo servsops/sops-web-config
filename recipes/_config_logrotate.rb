@@ -8,16 +8,18 @@ end
 
 # scripts to run-logrotate and upload to s3
 
-s3_bucket = node[:nxweb][:s3_bucket]
-
-directory "/opt/scripts"
-
-template "/opt/scripts/nx-logs-to-s3.sh" do
-  mode 0755
-  owner "root"
-  group "root"
-  variables({ :s3_bucket => s3_bucket })
-  source "script-nx-logs-to-s3.sh.erb"
+if node.web_config['s3_bucket']
+  s3_bucket = node.web_config['s3_bucket']
+  
+  directory "/opt/scripts"
+  
+  template "/opt/scripts/nx-logs-to-s3.sh" do
+    mode 0755
+    owner "root"
+    group "root"
+    variables({ :s3_bucket => s3_bucket })
+    source "script-nx-logs-to-s3.sh.erb"
+  end
 end
 
 # custom logrotate configs
@@ -44,7 +46,7 @@ SHELL=/bin/bash
 13 * * * * root nice -n 10 bash /opt/scripts/nx-logs-to-s3.sh &>> /var/log/cron.log
 "
 
-job_content = "" unless node[:nxweb][:logrotate]
+job_content = "" unless node.web_config.logrotate
 
 file "/etc/cron.d/rotate-upload-logs" do
   mode 0644

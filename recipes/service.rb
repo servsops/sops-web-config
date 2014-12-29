@@ -1,5 +1,5 @@
 
-service = node["web-config"]["service"]
+service = node.web_conifg.service
 
 service service.name do
   supports :status => true, :restart => true, :reload => true
