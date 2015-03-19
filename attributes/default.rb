@@ -10,7 +10,8 @@ default.web_config.web_servers = {
     "listen" => 80,
     "root" => "/var/www/nginx-default",
     "access_log" => "/var/log/nginx/localhost.access.log",
-    "error_log" => "/var/log/nginx/localhost.error.log"
+    "error_log" => "/var/log/nginx/localhost.error.log",
+    "template" => "nginx.conf.erb"
   }
 }
 
